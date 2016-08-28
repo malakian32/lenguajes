@@ -12,8 +12,12 @@ adverb (muy|mucho|poco|nada|bastante|demasiado|escasamente|menos|más|algo|extre
 conjunction (y|e|ni|que|o|pero|mas|sino|ya)
 
 naturalNumber [1-9][0-9]*|0
+integerNumber (-)?[1-9][0-9]*|0
+realNumber ((([1-9][0-9]*|0)"."[0-9]+)|([1-9][0-9]*))(E-?[1-9][0-9]*)?
+imaginaryNumber {realNumber}("+"|"-"){realNumber}i
 
 %%
+
 {pronoun} {printf("%s: pronombre\n", yytext);}
 {article} {printf("%s: articulo\n", yytext);}
 {verb} {printf("%s: verbo\n", yytext);}
@@ -23,10 +27,15 @@ naturalNumber [1-9][0-9]*|0
 {conjunction} {printf("%s: conjuncion\n", yytext);}
 
 
-{naturalNumber} {printf("%s: numero natural\n", yytext);}
+{naturalNumber} {printf("%s: natural\n", yytext);}
+{integerNumber} {printf("%s: entero\n", yytext);}
+{realNumber} {printf("%s: real\n", yytext);}
+{imaginaryNumber} {printf("%s: imaginario\n", yytext);}
 {whiteSpace} 
 . printf( "Unrecognized character: %s\n", yytext );
+
 %%
+
 int main() {
 	yylex();
 	return 0;
