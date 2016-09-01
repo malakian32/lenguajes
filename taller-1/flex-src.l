@@ -9,9 +9,12 @@
 whiteSpace [ \t\n]+
 pronoun (yo|tu|usted|ella|nosotros|vosotros|ellos|ellas|ustedes|vos)
 article (el|la|lo|las|los|un|una|unos|unas)
-ser (estoy|estás|está|estamos|estáis|están|estaba|estabas|estábamos|estabais|estaban|estabas|estuve|estuviste|estuvo|estuvimos|estuvisteis|estuvieron|estuviste|estaré|estarás|estará|estaremos|estaréis|estarán|estarás|estaría|estarías|estaría|estaríamos|estaríais|estarían|estarías)
-estar (soy|eres|es|somos|sois|son|sos|era|eras|era|éramos|erais|eran|eras|fui|fuiste|fue|fuimos|fuisteis|fueron|fuiste|seré|serás|será|seremos|seréis|serán|serás|sería|serías|sería|seríamos|seríais|serían|serías) 
-verb {ser}|{estar}
+ser (ser|estoy|estás|está|estamos|estáis|están|estaba|estabas|estábamos|estabais|estaban|estabas|estuve|estuviste|estuvo|estuvimos|estuvisteis|estuvieron|estuviste|estaré|estarás|estará|estaremos|estaréis|estarán|estarás|estaría|estarías|estaría|estaríamos|estaríais|estarían|estarías)
+estar (estar|soy|eres|es|somos|sois|son|sos|era|eras|era|éramos|erais|eran|eras|fui|fuiste|fue|fuimos|fuisteis|fueron|fuiste|seré|serás|será|seremos|seréis|serán|serás|sería|serías|sería|seríamos|seríais|serían|serías) 
+hacer (hacer|hago|haces|hace|hacemos|haceis|hacen|hice|hiciste|hizo|hicimos|hicisteis|hicieron|haré|harás|hará|haremos|haréis|haría|harías|harías|haríamos|haríais|harían) 
+tener (tener|tengo|tiene|tienes|tenemos|teneis|tienen|tuve|tenías|tenía|teníamos|teníais|tenían|tuvo|tuviste|tuvieron|tuvimos|tuvisteis|tendré|tendrá|tendrás|tendremos|tendrán|tendréis|tendría|tendrías|tendríamos|tendrían|tendríais) 
+buscar (buscar|busco|busca|buscas|buscamos|buscais|buscan|busqué|buscaste|buscó|buscamos|buscasteis|buscaron|buscaré|buscarás|buscará|buscaremos|buscaréis|buscarán|buscaría|buscarías|buscariamos|buscariais|buscarían) 
+verb {ser}|{estar}|{hacer}|{tener}|{buscar}
 noun (casa|gato|perro|persona|patio|ropa|comida|universidad|silla|mesa|lápiz)
 adjective (bonito|feo|grande|pequeño|bueno|malo|mi|tu(s)?|su(s)?|nuestr(o|a|os|as)?|vuestr(o|a|os|as)?)
 adverb (muy|mucho|poco|nada|bastante|demasiado|escasamente|menos|más|algo|extremadamente|infinitamente|absolutamente|tanto)
