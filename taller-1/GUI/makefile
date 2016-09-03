@@ -1,5 +1,5 @@
 # change application name here (executable output name)
-TARGET=taller-1-gui
+TARGET=taller
 
 # compiler
 CC=gcc
@@ -23,10 +23,10 @@ LDFLAGS=$(PTHREAD) $(GTKLIB) -export-dynamic
 OBJS=    main.o
 
 all: $(OBJS)
-    $(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
+	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
     
 main.o: src/main.c
-    $(CC) -c $(CCFLAGS) src/main.c $(GTKLIB) -o main.o
+	$(CC) -c $(CCFLAGS) src/main.c $(GTKLIB) -o main.o
     
 clean:
-    rm -f *.o $(TARGET)
+	rm -f *.o $(TARGET)

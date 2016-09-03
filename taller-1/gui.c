@@ -12,9 +12,7 @@ static void buttonActivated (GtkWidget *widget, gpointer data) {
 	} else {
 		MODE = 0;
 		gtk_button_set_label (GTK_BUTTON(button), "MODO FENOTIPICO");
-	}
-	
-	
+	}	
 }
 
 static void activate (GtkApplication* app, gpointer user_data) {
