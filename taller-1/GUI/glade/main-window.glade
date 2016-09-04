@@ -35,30 +35,30 @@
           </object>
           <packing>
             <property name="x">250</property>
-            <property name="y">100</property>
+            <property name="y">70</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="info">
-            <property name="width_request">457</property>
-            <property name="height_request">40</property>
+            <property name="width_request">700</property>
+            <property name="height_request">-1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xpad">10</property>
-            <property name="ypad">10</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
             <property name="label" translatable="yes">Todos los cambios son guardados automáticamente en output.txt</property>
-            <property name="ellipsize">start</property>
-            <property name="xalign">0</property>
+            <property name="ellipsize">end</property>
             <property name="yalign">0</property>
           </object>
           <packing>
-            <property name="y">470</property>
+            <property name="x">2</property>
+            <property name="y">653</property>
           </packing>
         </child>
         <child>
           <object class="GtkScrolledWindow" id="editorScroll">
             <property name="width_request">700</property>
-            <property name="height_request">150</property>
+            <property name="height_request">103</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">never</property>
@@ -66,40 +66,48 @@
             <child>
               <object class="GtkTextView" id="editor">
                 <property name="width_request">700</property>
-                <property name="height_request">150</property>
+                <property name="height_request">100</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
                 <property name="is_focus">True</property>
-                <property name="wrap_mode">word</property>
+                <property name="wrap_mode">word-char</property>
+                <property name="left_margin">5</property>
+                <property name="right_margin">5</property>
+                <property name="top_margin">5</property>
+                <property name="bottom_margin">5</property>
                 <signal name="key-release-event" handler="keyPressedInEditor" swapped="no"/>
               </object>
             </child>
           </object>
           <packing>
-            <property name="y">150</property>
+            <property name="y">130</property>
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="outputScroll">
-            <property name="width_request">700</property>
-            <property name="height_request">150</property>
+          <object class="GtkScrolledWindow" id="lexicalAnalysisScroll">
+            <property name="width_request">477</property>
+            <property name="height_request">203</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">never</property>
             <property name="shadow_type">in</property>
             <child>
-              <object class="GtkTextView" id="output">
-                <property name="width_request">700</property>
-                <property name="height_request">150</property>
+              <object class="GtkTextView" id="lexicalAnalysis">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="editable">False</property>
+                <property name="wrap_mode">word-char</property>
+                <property name="left_margin">25</property>
+                <property name="right_margin">5</property>
+                <property name="top_margin">5</property>
+                <property name="bottom_margin">5</property>
               </object>
             </child>
           </object>
           <packing>
-            <property name="y">310</property>
+            <property name="x">225</property>
+            <property name="y">235</property>
           </packing>
         </child>
         <child>
@@ -110,9 +118,119 @@
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Analizador léxico</property>
             <attributes>
+              <attribute name="weight" value="bold"/>
               <attribute name="scale" value="2"/>
             </attributes>
           </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="windowTitle1">
+            <property name="width_request">22</property>
+            <property name="height_request">160</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Análisis léxico</property>
+            <property name="angle">90</property>
+            <property name="xalign">0.20000000298023224</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+              <attribute name="scale" value="1"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">226</property>
+            <property name="y">257</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="meaningsScroll">
+            <property name="width_request">477</property>
+            <property name="height_request">201</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="hscrollbar_policy">never</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTextView" id="meanings">
+                <property name="height_request">100</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="editable">False</property>
+                <property name="wrap_mode">word-char</property>
+                <property name="left_margin">25</property>
+                <property name="right_margin">5</property>
+                <property name="top_margin">5</property>
+                <property name="bottom_margin">5</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">225</property>
+            <property name="y">440</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="statsScroll">
+            <property name="width_request">223</property>
+            <property name="height_request">406</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="hscrollbar_policy">never</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTextView" id="stats">
+                <property name="height_request">100</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="editable">False</property>
+                <property name="wrap_mode">word-char</property>
+                <property name="left_margin">25</property>
+                <property name="right_margin">5</property>
+                <property name="top_margin">5</property>
+                <property name="bottom_margin">5</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="y">235</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="windowTitle4">
+            <property name="width_request">22</property>
+            <property name="height_request">160</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Acepciones</property>
+            <property name="angle">90</property>
+            <property name="xalign">0.20000000298023224</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+              <attribute name="scale" value="1"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">226</property>
+            <property name="y">460</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="windowTitle2">
+            <property name="width_request">20</property>
+            <property name="height_request">160</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Estadísticas</property>
+            <property name="angle">90</property>
+            <property name="xalign">0.20000000298023224</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+              <attribute name="scale" value="1"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="y">350</property>
+          </packing>
         </child>
       </object>
     </child>

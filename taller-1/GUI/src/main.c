@@ -6,18 +6,15 @@ int GENOTYPIC_MODE = 1;
 int MODE = 0;
 GtkWidget *editorModeButton;
 GtkWidget *editorTextView;
-GtkWidget *outputTextView;
+GtkWidget *lexicalAnalysisTextView;
 GtkTextBuffer *editorTextBuffer;
-GtkTextBuffer *outputTextBuffer;
-GtkTextBuffer *outputTextBuffer;
-
+GtkTextBuffer *lexicalAnalysisTextBuffer;
 
 int main(int argc, char *argv[]) {
-
-
-
 	GtkBuilder *builder;
 	GtkWidget *window;
+
+	initStats();
 
 	gtk_init(&argc, &argv);
 
@@ -30,9 +27,9 @@ int main(int argc, char *argv[]) {
 	editorModeButton = GTK_WIDGET(
 			gtk_builder_get_object(builder, "editorMode"));
 	editorTextView = GTK_WIDGET(gtk_builder_get_object(builder, "editor"));
-	outputTextView = GTK_WIDGET(gtk_builder_get_object(builder, "output"));
+	lexicalAnalysisTextView = GTK_WIDGET(gtk_builder_get_object(builder, "lexicalAnalysis"));
 	editorTextBuffer = gtk_text_view_get_buffer(editorTextView);
-	outputTextBuffer = gtk_text_view_get_buffer(outputTextView);
+	lexicalAnalysisTextBuffer = gtk_text_view_get_buffer(lexicalAnalysisTextView);
 
 	g_object_unref(builder);
 	gtk_widget_show(window);
@@ -65,6 +62,20 @@ void keyPressedInEditor() {
 		gtk_text_buffer_get_start_iter(editorTextBuffer, &start);
 		gtk_text_buffer_get_end_iter(editorTextBuffer, &end);
 		text = gtk_text_buffer_get_text(editorTextBuffer, &start, &end, FALSE);
-		gtk_text_buffer_set_text(outputTextBuffer, text, size);
+
+		updateLexicalAnalysis(text, size);
+		updateMeanings(text);
+		updateStats(text);
 	}
+}
+
+void updateLexicalAnalysis(char* text, int size) {
+	gtk_text_buffer_set_text(lexicalAnalysisTextBuffer, text, size);
+}
+
+void updateMeanings(char* text) {
+}
+
+void updateStats(char* text) {
+
 }

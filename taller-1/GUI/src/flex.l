@@ -54,7 +54,7 @@ void initStats() {
 	
 	for(i=0; i<sizeof(stats);i++) {
 		stats[i] = 0;
-	}
+	}	
 }
 
 void count(int category, char* text) {
@@ -118,6 +118,19 @@ void printStats() {
 	int i;
 	
 	for(i=0; i<sizeof(stats);i++) {
-		printf("%s:%d\n", getCategoryName(i), stats[i]);
+		printf("%d%s:%d\n", i,getCategoryName(i), stats[i]);
 	}
 }
+
+int getStringSize(char* string){
+	int i = 0;
+	
+	while (string[i] != '\0') {
+    	i++;
+	}
+	
+	return i;
+}
+
+
+
