@@ -121,9 +121,3 @@ void printStats() {
 		printf("%s:%d\n", getCategoryName(i), stats[i]);
 	}
 }
-
-int main() {
-	initStats();
-	yylex();	
-	return 0;
-}
