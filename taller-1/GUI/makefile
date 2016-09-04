@@ -1,47 +1,39 @@
-# change application name here (executable output name)
-TARGET=taller
-
-# compiler
+RELEASE_FOLDER=release
+EXEC=$(RELEASE_FOLDER)/analizador-lexico
 CC=gcc
-# debug
 DEBUG=-g
-# optimisation
 OPT=-O0
-# warnings
 WARN=-Wall
-
 PTHREAD=-pthread
-
-CCFLAGS=$(DEBUG) $(OPT) $(WARN) $(PTHREAD) -pipe
-
+LFL=-lfl
+CCFLAGS=$(DEBUG) $(OPT) $(WARN) $(PTHREAD) $(LFL) -pipe
 GTKLIB=`pkg-config --cflags --libs gtk+-3.0`
-
-# linker
 LD=gcc
-LDFLAGS=$(PTHREAD) $(GTKLIB) -export-dynamic
-
+LDFLAGS=$(PTHREAD) $(LFL) $(GTKLIB) -export-dynamic
 OBJS=main.o
+
 
 all: pre-build build post-build
 
-build: $(OBJS)
-	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
+build: main.o
+	$(LD) -o $(EXEC) $(RELEASE_FOLDER)/main.o $(RELEASE_FOLDER)/flex.o $(LDFLAGS)
 	
 flex.c:
 	lex -o src/flex.c --header-file=src/flex.h src/flex.l
 	
 flex.o: flex.c
-	$(CC) -c $(CCFLAGS) -o flex.o src/flex.c -lfl
+	$(CC) -c $(CCFLAGS) src/flex.c -o $(RELEASE_FOLDER)/flex.o 
     
-main.o: flex.o src/main.c
-	$(CC) -c $(CCFLAGS) src/main.c flex.o $(GTKLIB) -o main.o
+main.o: flex.o
+	$(CC) -c $(CCFLAGS) src/main.c $(GTKLIB) -o $(RELEASE_FOLDER)/main.o
     
 clear:
-	-rm -f *.o src/flex.c src/flex.h src/flex.o
+	-rm -f *.o src/flex.c src/flex.h
 	
 pre-build: clear
-	-rm -f $(TARGET) 
+	-rm -f $(EXEC)
 	
 post-build: clear
-	-rm -f *.o src/flex.c src/flex.h src/flex.o
-	./$(TARGET)
+	-rm -f $(RELEASE_FOLDER)/*.o src/flex.c src/flex.h
+	./$(EXEC)
+	

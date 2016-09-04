@@ -1,5 +1,5 @@
 #include <gtk/gtk.h>
-//#include "flex.h"
+#include "flex.h"
 
 int PHENOTYPIC_MODE = 0;
 int GENOTYPIC_MODE = 1;
@@ -11,8 +11,9 @@ GtkTextBuffer *editorTextBuffer;
 GtkTextBuffer *outputTextBuffer;
 GtkTextBuffer *outputTextBuffer;
 
+
 int main(int argc, char *argv[]) {
-	yylex();
+
 
 
 	GtkBuilder *builder;
