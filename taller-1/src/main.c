@@ -93,7 +93,7 @@ void updateFile(char *text) {
 	file = fopen("output.txt", "w");
 
 	if (file == NULL) {
-		printf("Error opening file!\n");
+		printf("Error saving file!\n");
 		exit(1);
 	}
 
@@ -106,18 +106,15 @@ void readFile() {
 	char *text = malloc(100000000);
 	file = fopen("output.txt", "r");
 
-	if (file == NULL) {
-		printf("Error opening file!\n");
-		exit(1);
+	if (file != NULL) {
+
+		while (fgets(buffer, 255, file)) {
+			strcat(text, buffer);
+		}
+
+		updateTextEditor(text, strlen(text));
+		fclose(file);
 	}
-
-	while (fgets(buffer, 255, file)) {
-		strcat(text, buffer);
-	}
-
-	updateTextEditor(text, strlen(text));
-
-	fclose(file);
 }
 
 void updateTextEditor(char* text, int size) {
