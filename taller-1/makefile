@@ -34,6 +34,6 @@ pre-build: clear
 	@-rm -f $(EXEC)
 	
 post-build: clear
-	@-rm -f $(RELEASE_FOLDER)/*.o src/flex.c src/flex.h
+	@-rm -f $(RELEASE_FOLDER)/*.o src/flex.h #src/flex.c
 	./$(EXEC)
 	

@@ -82,11 +82,11 @@ void keyPressedInEditor() {
 		updateStats(text);
 	}
 
-	if (counter % 3 == 0) {
-		updateFile(text);
-	}
+	//if (counter % 3 == 0) {
+	updateFile(text);
+	//}
 
-	counter++;
+	//counter++;
 }
 
 void updateFile(char *text) {
