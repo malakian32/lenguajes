@@ -5,6 +5,9 @@ int PHENOTYPIC_MODE = 0;
 int GENOTYPIC_MODE = 1;
 int MODE = 0;
 int counter = 0;
+
+extern int myArray[13] = { 0 };
+
 GtkWidget *editorModeButton;
 GtkWidget *editorTextView;
 GtkWidget *lexicalAnalysisTextView;
@@ -77,6 +80,7 @@ void keyPressedInEditor() {
 	gtk_text_buffer_get_end_iter(editorTextBuffer, &end);
 	text = gtk_text_buffer_get_text(editorTextBuffer, &start, &end, FALSE);
 
+	initStats();
 	updateFile(text);
 
 	if (MODE == GENOTYPIC_MODE) {
@@ -99,13 +103,24 @@ void keyPressedInEditor() {
 			exit(1);
 		}
 		fprintf(f, "");
-
 		fclose(f);
-		yylex();
 
+		
+		FILE *stats = fopen("stats.txt", "w");
+		if (stats == NULL)
+		{
+			printf("Error opening file!\n");
+			exit(1);
+		}
+		fprintf(stats, "");
+		fclose(stats);
+
+		yylex();
 
 		readFenotipycFile();
 	}
+	printStats();
+	readStatsFile();
 }
 
 void updateFile(char *text) {
@@ -152,6 +167,22 @@ void readFenotipycFile() {
 	}
 }
 
+void readStatsFile() {
+	char buffer[255];
+	char *text = malloc(100000000);
+	file = fopen("stats.txt", "r");
+
+	if (file != NULL) {
+
+		while (fgets(buffer, 255, file)) {
+			strcat(text, buffer);
+		}
+
+		updateStats(text, strlen(text));
+		fclose(file);
+	}
+}
+
 void updateTextEditor(char* text, int size) {
 	gtk_text_buffer_set_text(editorTextBuffer, text, size);
 }
@@ -165,5 +196,5 @@ void updateMeanings(char* text, int size) {
 }
 
 void updateStats(char* text, int size) {
-
+	gtk_text_buffer_set_text(statsTextBuffer, text, size);
 }
