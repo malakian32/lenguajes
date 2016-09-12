@@ -4,6 +4,12 @@
 	char* getCategoryName(int category);
 	void initStats();
 	void printStats();
+	char buf[1000000];
+%}
+
+%{
+#undef ECHO
+#define ECHO snprintf(buf, sizeof(buf), "%s", yytext)
 %}
 
 whiteSpace [ \t\n]+
@@ -44,9 +50,8 @@ punctuation "."|","|":"|"¿"|"?"|"!"|"¡"
 {operator} {count(11, yytext);}
 {punctuation} {count(12, yytext);}
 {whiteSpace} 
-. printf( "Unrecognized character: %s\n", yytext );
+. count(-1, yytext);
 stats {printStats();}
-
 
 %%
 void initStats() {
@@ -59,8 +64,16 @@ void initStats() {
 
 void count(int category, char* text) {
 	char* categoryName = getCategoryName(category);
-	
-	printf("%s: %s\n", text, categoryName);
+	FILE *f = fopen("file.txt", "a");
+	if (f == NULL)
+	{
+		printf("Error opening file!\n");
+		exit(1);
+	}
+	fprintf(f, "%s:%s ", text, categoryName);
+
+	fclose(f);
+
 	stats[category] = stats[category] + 1;
 }
 
@@ -131,6 +144,3 @@ int getStringSize(char* string){
 	
 	return i;
 }
-
-
-

@@ -754,7 +754,11 @@ char *yytext;
 	char* getCategoryName(int category);
 	void initStats();
 	void printStats();
-#line 758 "src/flex.c"
+	char buf[1000000];
+#line 11 "src/flex.l"
+#undef ECHO
+#define ECHO snprintf(buf, sizeof(buf), "%s", yytext)
+#line 762 "src/flex.c"
 
 #define INITIAL 0
 
@@ -941,10 +945,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 30 "src/flex.l"
+#line 36 "src/flex.l"
 
 
-#line 948 "src/flex.c"
+#line 952 "src/flex.c"
 
 	if ( !(yy_init) )
 		{
@@ -1029,91 +1033,91 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 32 "src/flex.l"
+#line 38 "src/flex.l"
 {count(0, yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 33 "src/flex.l"
+#line 39 "src/flex.l"
 {count(1, yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 34 "src/flex.l"
+#line 40 "src/flex.l"
 {count(2, yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 35 "src/flex.l"
+#line 41 "src/flex.l"
 {count(3, yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 36 "src/flex.l"
+#line 42 "src/flex.l"
 {count(4, yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 37 "src/flex.l"
+#line 43 "src/flex.l"
 {count(5, yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 38 "src/flex.l"
+#line 44 "src/flex.l"
 {count(6, yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 40 "src/flex.l"
+#line 46 "src/flex.l"
 {count(7, yytext);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 41 "src/flex.l"
+#line 47 "src/flex.l"
 {count(8, yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 42 "src/flex.l"
+#line 48 "src/flex.l"
 {count(9, yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 43 "src/flex.l"
+#line 49 "src/flex.l"
 {count(10, yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 44 "src/flex.l"
+#line 50 "src/flex.l"
 {count(11, yytext);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 45 "src/flex.l"
+#line 51 "src/flex.l"
 {count(12, yytext);}
 	YY_BREAK
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 46 "src/flex.l"
+#line 52 "src/flex.l"
 
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 47 "src/flex.l"
-printf( "Unrecognized character: %s\n", yytext );
+#line 53 "src/flex.l"
+count(-1, yytext);
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 48 "src/flex.l"
+#line 54 "src/flex.l"
 {printStats();}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 51 "src/flex.l"
+#line 56 "src/flex.l"
 ECHO;
 	YY_BREAK
-#line 1117 "src/flex.c"
+#line 1121 "src/flex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2111,7 +2115,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 51 "src/flex.l"
+#line 56 "src/flex.l"
 
 
 void initStats() {
@@ -2124,8 +2128,16 @@ void initStats() {
 
 void count(int category, char* text) {
 	char* categoryName = getCategoryName(category);
-	
-	printf("%s: %s\n", text, categoryName);
+	FILE *f = fopen("file.txt", "a");
+	if (f == NULL)
+	{
+		printf("Error opening file!\n");
+		exit(1);
+	}
+	fprintf(f, "%s:%s ", text, categoryName);
+
+	fclose(f);
+
 	stats[category] = stats[category] + 1;
 }
 
@@ -2196,7 +2208,4 @@ int getStringSize(char* string){
 	
 	return i;
 }
-
-
-
 
