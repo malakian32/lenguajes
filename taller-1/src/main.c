@@ -15,7 +15,7 @@ GtkWidget *meaningsTextView;
 GtkWidget *statsTextView;
 GtkTextBuffer *editorTextBuffer;
 GtkTextBuffer *lexicalAnalysisTextBuffer;
-GtkTextBuffer *meaningsTextBuffer;
+//GtkTextBuffer *meaningsTextBuffer;
 GtkTextBuffer *statsTextBuffer;
 FILE *file;
 
@@ -39,8 +39,8 @@ int main(int argc, char *argv[]) {
 	lexicalAnalysisTextView = GTK_WIDGET(gtk_builder_get_object(builder, "lexicalAnalysis"));
 	lexicalAnalysisTextBuffer = gtk_text_view_get_buffer(lexicalAnalysisTextView);
 
-	meaningsTextView = GTK_WIDGET(gtk_builder_get_object(builder, "meanings"));
-	meaningsTextBuffer = gtk_text_view_get_buffer(meaningsTextView);
+	//meaningsTextView = GTK_WIDGET(gtk_builder_get_object(builder, "meanings"));
+	//meaningsTextBuffer = gtk_text_view_get_buffer(meaningsTextView);
 
 	statsTextView = GTK_WIDGET(gtk_builder_get_object(builder, "stats"));
 	statsTextBuffer = gtk_text_view_get_buffer(statsTextView);
@@ -62,11 +62,12 @@ void buttonActivated() {
 	if (MODE == PHENOTYPIC_MODE) {
 		MODE = GENOTYPIC_MODE;
 		gtk_button_set_label(GTK_BUTTON(editorModeButton), "MODO GENOTÍPICO");
-		readFile();
+		readFenotipycFile();
+		readStatsFile();
 	} else {
 		MODE = PHENOTYPIC_MODE;
 		gtk_button_set_label(GTK_BUTTON(editorModeButton), "MODO FENOTÍPICO");
-		readFenotipycFile();
+		readFile();
 	}
 }
 

@@ -26,10 +26,11 @@ adjective (bonito|feo|grande|pequeño|bueno|malo|mi|tu(s)?|su(s)?|nuestr(o|a|os|
 adverb (muy|mucho|poco|nada|bastante|demasiado|escasamente|menos|más|algo|extremadamente|infinitamente|absolutamente|tanto)
 conjunction (y|e|ni|que|o|pero|mas|sino|ya)
 
+
 naturalNumber [1-9][0-9]*|0
 integerNumber (-)?[1-9][0-9]*|0
 realNumber ((([1-9][0-9]*|0)"."[0-9]+)|([1-9][0-9]*))(E-?[1-9][0-9]*)?
-imaginaryNumber {realNumber}("+"|"-"){realNumber}i
+imaginaryNumber ({realNumber}|{integerNumber})("+"|"-")({realNumber}|{integerNumber})i
 operator "+"|"-"|"*"|"/"|"("|")"
 punctuation "."|","|":"|"¿"|"?"|"!"|"¡"
 
@@ -56,7 +57,6 @@ stats {printStats();}
 %%
 void initStats() {
 	int i;
-	
 	for(i=0; i<14;i++) {
 		stats[i] = 0;
 	}	
@@ -156,10 +156,8 @@ void printStats() {
 
 int getStringSize(char* string){
 	int i = 0;
-	
 	while (string[i] != '\0') {
-    	i++;
+    		i++;
 	}
-	
 	return i;
 }
