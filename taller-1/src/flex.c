@@ -749,7 +749,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "src/flex.l"
 #line 2 "src/flex.l"
-	int stats[13];
+	int stats[14];
 	void count(int category, char* text);
 	char* getCategoryName(int category);
 	void initStats();
@@ -2121,7 +2121,7 @@ void yyfree (void * ptr )
 void initStats() {
 	int i;
 	
-	for(i=0; i<13;i++) {
+	for(i=0; i<14;i++) {
 		stats[i] = 0;
 	}	
 }
@@ -2196,7 +2196,9 @@ char* getCategoryName(int category) {
 			stats[12] = stats[12] + 1;
 			break;
 		default:
-			categoryName = "DESCONOCIDO";
+			stats[13] = stats[13] + 1;
+			categoryName = "ER";
+			break;
 	}
 	
 	return categoryName;
@@ -2210,7 +2212,7 @@ void printStats() {
 		printf("Error opening file!\n");
 		exit(1);
 	}
-	for(i=0; i<13;i++) {
+	for(i=0; i<14;i++) {
 		fprintf(statsFile, "%s: %d\n", getCategoryName(i), stats[i]);
 	}
 	fclose(statsFile);

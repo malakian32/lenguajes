@@ -84,10 +84,6 @@ void keyPressedInEditor() {
 	updateFile(text);
 
 	if (MODE == GENOTYPIC_MODE) {
-		updateLexicalAnalysis(text, size);
-		updateMeanings(text);
-		updateStats(text);
-	}else{
 		FILE *fileIn = fopen("output.txt", "r");      
 		if (!fileIn)
 		{
@@ -118,9 +114,11 @@ void keyPressedInEditor() {
 		yylex();
 
 		readFenotipycFile();
+		printStats();
+		readStatsFile();
+	}else{
+		updateLexicalAnalysis(text, size);
 	}
-	printStats();
-	readStatsFile();
 }
 
 void updateFile(char *text) {
