@@ -45,27 +45,31 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    print = 258,
-    exit_command = 259,
-    number = 260,
-    identifier = 261
+    space = 258,
+    op = 259,
+    print = 260,
+    exit_command = 261,
+    number = 262,
+    identifier = 263
   };
 #endif
 /* Tokens.  */
-#define print 258
-#define exit_command 259
-#define number 260
-#define identifier 261
+#define space 258
+#define op 259
+#define print 260
+#define exit_command 261
+#define number 262
+#define identifier 263
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 10 "calc.y" /* yacc.c:1909  */
+#line 12 "calc.y" /* yacc.c:1909  */
 int num; char id;
 
-#line 69 "y.tab.h" /* yacc.c:1909  */
+#line 73 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

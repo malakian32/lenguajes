@@ -5,10 +5,14 @@ void yyerror (char *s);
 int symbols[52];
 int symbolVal(char symbol);
 void updateSymbolVal(char symbol, int val);
+void add(int val);
+void addRow();
 %}
 
 %union {int num; char id;}         /* Yacc definitions */
 %start line
+%token space
+%token op
 %token print
 %token exit_command
 %token <num> number
@@ -26,19 +30,31 @@ line    : assignment ';'		{;}
 		| line assignment ';'	{;}
 		| line print exp ';'	{printf("Printing %d\n", $3);}
 		| line exit_command ';'	{exit(EXIT_SUCCESS);}
+		| exp
         ;
 
 assignment : identifier '=' exp  { updateSymbolVal($1,$3); }
 			;
-exp    	: term                  {$$ = $1;}
-       	| exp '+' term          {$$ = $1 + $3;}
-       	| exp '|' term          {$$ = $1 - $3;}
+exp    	: mat                   {;}
+       	| exp op mat            {;}
        	;
-term   	: number                //{$$ = $1;}
-		| identifier			{$$ = symbolVal($1);} 
+mat     : term                  {addRow();} 
+        | mat '|' term          {addRow();}
         ;
-
+term   	: number                {add($1);};
+        | term number           {add($2);};
+        ;
+        
+        
 %%                     /* C code */
+
+void add(int val){
+    printf("adding %d\n", val);
+}
+
+void addRow(){
+    printf("adding new row \n");
+}
 
 int computeSymbolIndex(char token)
 {
