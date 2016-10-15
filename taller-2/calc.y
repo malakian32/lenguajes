@@ -11,30 +11,17 @@ void addRow();
 
 %union {int num; char id;}         /* Yacc definitions */
 %start line
-%token space
 %token op
-%token print
-%token exit_command
 %token <num> number
-%token <id> identifier
-%type <num> line exp term 
-%type <id> assignment
+%type <num> term 
 
 %%
 
 /* calc 1 2 3|1 2 3 op 1 2|1 2|1 2 */
 
-line    : assignment ';'		{;}
-		| exit_command ';'		{exit(EXIT_SUCCESS);}
-		| print exp ';'			{printf("Printing %d\n", $2);}
-		| line assignment ';'	{;}
-		| line print exp ';'	{printf("Printing %d\n", $3);}
-		| line exit_command ';'	{exit(EXIT_SUCCESS);}
-		| exp
+line    : exp                   {;}
         ;
 
-assignment : identifier '=' exp  { updateSymbolVal($1,$3); }
-			;
 exp    	: mat                   {;}
        	| exp op mat            {;}
        	;

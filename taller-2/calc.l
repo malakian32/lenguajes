@@ -2,10 +2,7 @@
 #include "y.tab.h"
 %}
 %%
-"print"				   {return print;}
-"exit"				   {return exit_command;}
-[a-zA-Z]			   {yylval.id = yytext[0]; return identifier;}
-[0-9]+                 {yylval.num = atoi(yytext); return number;}
+[1-9][0-9]*|0          {yylval.num = atoi(yytext); return number;}
 "+"|"-"|"*"|"/"|"dot"  {return op;}
 [ \t\n]                 ;
 [=;|]           	   {return yytext[0];}
