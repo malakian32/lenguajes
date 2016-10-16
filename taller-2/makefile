@@ -1,5 +1,5 @@
 calc: lex.yy.c y.tab.c
-	gcc -g lex.yy.c y.tab.c -o calc
+	gcc -g lex.yy.c matrix.c y.tab.c -o calc
 
 lex.yy.c: y.tab.c calc.l
 	lex calc.l
