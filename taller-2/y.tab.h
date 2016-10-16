@@ -45,18 +45,18 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    view = 258,
+    print = 258,
     save = 259,
-    fileName = 260,
-    op = 261,
+    op = 260,
+    fileName = 261,
     number = 262
   };
 #endif
 /* Tokens.  */
-#define view 258
+#define print 258
 #define save 259
-#define fileName 260
-#define op 261
+#define op 260
+#define fileName 261
 #define number 262
 
 /* Value type.  */
@@ -64,7 +64,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 19 "calc.y" /* yacc.c:1909  */
+#line 21 "calc.y" /* yacc.c:1909  */
 int num; char *str;
 
 #line 71 "y.tab.h" /* yacc.c:1909  */

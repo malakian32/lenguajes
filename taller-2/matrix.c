@@ -24,10 +24,12 @@ void destroyMatrix(Matrix matrix) {
 }
 
 void initializeMatrix(Matrix *matrix, int *array) {
+    int tmp = 0;
     for (int i = 0; i < matrix->rows; i++) {
         for (int j = 0; j < matrix->cols; j++) {
-            int value = array[i + j];
+            int value = array[tmp];
             setMatrixValueAt(matrix, i, j, value);
+            tmp++;
         }
     }
 }
