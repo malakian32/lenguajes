@@ -81,8 +81,9 @@ void addRow();
 void addMatrix();
 void setPrintResultOption();
 void setFileName(char *filename);
+char *readFile(char *filename);
 
-#line 86 "y.tab.c" /* yacc.c:339  */
+#line 87 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -136,10 +137,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 21 "calc.y" /* yacc.c:355  */
+#line 22 "calc.y" /* yacc.c:355  */
 int num; char *str;
 
-#line 143 "y.tab.c" /* yacc.c:355  */
+#line 144 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -156,7 +157,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 160 "y.tab.c" /* yacc.c:358  */
+#line 161 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -396,18 +397,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   14
+#define YYLAST   12
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  9
+#define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  9
+#define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  11
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  20
+#define YYNSTATES  16
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -433,7 +434,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     8,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -454,8 +455,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    37,    38,    40,    41,    43,    44,    47,
-      48,    50,    50,    52,    54
+       0,    34,    34,    37,    38,    40,    43,    44,    46,    46,
+      48,    50
 };
 #endif
 
@@ -465,8 +466,8 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "print", "save", "op", "fileName",
-  "number", "'|'", "$accept", "line", "exp", "matrix", "term", "options",
-  "option", "printResultOption", "saveOption", YY_NULLPTR
+  "number", "$accept", "line", "exp", "matrix", "options", "option",
+  "printResultOption", "saveOption", YY_NULLPTR
 };
 #endif
 
@@ -475,14 +476,14 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262,   124
+       0,   256,   257,   258,   259,   260,   261,   262
 };
 # endif
 
-#define YYPACT_NINF -5
+#define YYPACT_NINF -4
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-5)))
+  (!!((Yystate) == (-4)))
 
 #define YYTABLE_NINF -1
 
@@ -493,8 +494,8 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,    -5,     6,    -3,    -1,     1,    -5,    -5,     3,    -2,
-       0,    -5,    -5,    -5,    -2,    -5,    -5,    -1,    -5,     1
+      -1,    -4,     6,    -3,    -4,    -4,    -4,     1,    -1,     0,
+      -4,    -4,    -4,    -4,    -4,    -4
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -502,20 +503,20 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     7,     0,     0,     3,     5,     1,    13,     0,     0,
-       2,     9,    11,    12,     0,     8,    14,     4,    10,     6
+       0,     5,     0,     0,     3,     1,    10,     0,     0,     2,
+       6,     8,     9,    11,     4,     7
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -5,    -5,    -5,     2,    -4,    -5,     4,    -5,    -5
+      -4,    -4,    -4,     2,    -4,     3,    -4,    -4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     4,     5,    10,    11,    12,    13
+      -1,     2,     3,     4,     9,    10,    11,    12
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -523,36 +524,36 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       7,     8,     9,     7,     8,     1,     6,    14,    15,    16,
-      19,    17,     0,     0,    18
+       6,     7,     8,     6,     7,     1,     5,    13,     0,     0,
+      14,     0,    15
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     4,     5,     3,     4,     7,     0,     8,     7,     6,
-      14,     9,    -1,    -1,    10
+       3,     4,     5,     3,     4,     6,     0,     6,    -1,    -1,
+       8,    -1,     9
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     7,    10,    11,    12,    13,     0,     3,     4,     5,
-      14,    15,    16,    17,     8,     7,     6,    12,    15,    13
+       0,     6,     9,    10,    11,     0,     3,     4,     5,    12,
+      13,    14,    15,     6,    11,    13
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     9,    10,    11,    11,    12,    12,    13,    13,    14,
-      14,    15,    15,    16,    17
+       0,     8,     9,    10,    10,    11,    12,    12,    13,    13,
+      14,    15
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     1,     3,     1,     3,     1,     2,     1,
-       2,     1,     1,     1,     2
+       0,     2,     2,     1,     3,     1,     1,     2,     1,     1,
+       1,     2
 };
 
 
@@ -1231,77 +1232,59 @@ yyreduce:
         case 2:
 #line 34 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1235 "y.tab.c" /* yacc.c:1646  */
+#line 1236 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 37 "calc.y" /* yacc.c:1646  */
-    {addMatrix();}
-#line 1241 "y.tab.c" /* yacc.c:1646  */
+    {;}
+#line 1242 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 38 "calc.y" /* yacc.c:1646  */
-    {addMatrix();}
-#line 1247 "y.tab.c" /* yacc.c:1646  */
+    {;}
+#line 1248 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 40 "calc.y" /* yacc.c:1646  */
-    {addRow();}
-#line 1253 "y.tab.c" /* yacc.c:1646  */
+    {addMatrix((yyvsp[0].str));}
+#line 1254 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 41 "calc.y" /* yacc.c:1646  */
-    {addRow();}
-#line 1259 "y.tab.c" /* yacc.c:1646  */
+#line 43 "calc.y" /* yacc.c:1646  */
+    {;}
+#line 1260 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 43 "calc.y" /* yacc.c:1646  */
-    {addCol((yyvsp[0].num));}
-#line 1265 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 8:
 #line 44 "calc.y" /* yacc.c:1646  */
-    {addCol((yyvsp[0].num));}
-#line 1271 "y.tab.c" /* yacc.c:1646  */
+    {;}
+#line 1266 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 47 "calc.y" /* yacc.c:1646  */
+#line 46 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1277 "y.tab.c" /* yacc.c:1646  */
+#line 1272 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 48 "calc.y" /* yacc.c:1646  */
-    {;}
-#line 1283 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 12:
-#line 50 "calc.y" /* yacc.c:1646  */
-    {;}
-#line 1289 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 13:
-#line 52 "calc.y" /* yacc.c:1646  */
     {setPrintResultOption();}
-#line 1295 "y.tab.c" /* yacc.c:1646  */
+#line 1278 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 14:
-#line 54 "calc.y" /* yacc.c:1646  */
+  case 11:
+#line 50 "calc.y" /* yacc.c:1646  */
     {setFileName((yyvsp[0].str));}
-#line 1301 "y.tab.c" /* yacc.c:1646  */
+#line 1284 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1305 "y.tab.c" /* yacc.c:1646  */
+#line 1288 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1529,7 +1512,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 58 "calc.y" /* yacc.c:1906  */
+#line 54 "calc.y" /* yacc.c:1906  */
 
 
 void addCol(int val){
@@ -1552,14 +1535,40 @@ void addRow(){
     cols=0;
 }
 
-void addMatrix(){
+void addMatrix(char *filename){
+    Matrix matrix = matrixes[matrixesIndex];
+    int row = 0;
+    int col = 0;
+    char *content = readFile(filename);
+    
+        printf("%d ", strlen(content));
+        printf("%c ", content[0]);
+        printf("%s ", content);
+    /*
+        printf("%c ", content[0]);
+
+    for (int i = 0; i < 100; i++) {
+        printf("%c ", content[i]);
+        if(content[i] == '\n') {
+            row++;
+        } else {
+            printf(" %s", content[i]);
+            //setMatrixValueAt(&matrix, row, col, atoi(content[i]));
+            col++;
+        }
+    }*/
+    
+    
+    
+    
+    /*
     printf("New matrix %d rows %d cols\n", matrixes[matrixesIndex].rows, matrixes[matrixesIndex].cols);
     createMatrix(&matrixes[matrixesIndex]);
     initializeMatrix(&matrixes[matrixesIndex], tmp);
     printMatrix(matrixes[matrixesIndex]);
     
     cols = 0;
-    indexTmp = 0;
+    indexTmp = 0;*/
     matrixesIndex++;
 }
 
@@ -1569,7 +1578,6 @@ void setPrintResultOption(){
 }
 
 void setFileName(char *filename){
-    printf("Setting Filename to save %s \n", file_name );
     file_name = filename;
     printf("Setting Filename to save %s \n", file_name );
 }
@@ -1586,6 +1594,31 @@ void saveFile(char *text) {
     } else {
         printf("Error saving file!\n");
     }
+}
+
+char *readFile(char *filename) {
+    FILE *file;
+    char *buffer;
+    long size;
+    file = fopen(filename, "rb");
+
+    if (!file)
+        printf("File %s doesn't exist\n", filename), exit(1);
+    
+    fseek(file, 0L, SEEK_END);
+    size = ftell(file);
+    rewind(file);
+
+    buffer = calloc(1, size + 1);
+    if (!buffer)
+        fclose(file), fputs("memory alloc fails", stderr), exit(1);
+
+    if (1 != fread(buffer, size, 1, file))
+        fclose(file), free(buffer), fputs("entire read fails", stderr), exit(1);
+
+    fclose(file);
+    
+    return buffer;
 }
 
 int main (void) {

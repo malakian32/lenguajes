@@ -16,6 +16,7 @@ void addRow();
 void addMatrix();
 void setPrintResultOption();
 void setFileName(char *filename);
+char *readFile(char *filename);
 %}
 
 %union {int num; char *str;}         /* Yacc definitions */
@@ -25,23 +26,18 @@ void setFileName(char *filename);
 %token op
 %token <str> fileName
 %token <num> number
-%type <num> term 
 
 %%
 
-/*./calc 1 2 3|4 5 6 * 1 2|3 4|5 6 --print-result --save filename.txt*/
+/*./calc mat1.txt * mat2.txt --print-result --save filename.txt*/
 
 line                : exp options                       {;}
                     ;
 
-exp    	            : matrix                            {addMatrix();}
-       	            | exp op matrix                     {addMatrix();}
+exp    	            : matrix                            {;}
+       	            | exp op matrix                     {;}
        	            ;
-matrix              : term                              {addRow();} 
-                    | matrix '|' term                   {addRow();}
-                    ;
-term   	            : number                            {addCol($1);};
-                    | term number                       {addCol($2);};
+matrix              : fileName                          {addMatrix($1);} 
                     ;
         
 options             : option                            {;}
@@ -77,14 +73,40 @@ void addRow(){
     cols=0;
 }
 
-void addMatrix(){
+void addMatrix(char *filename){
+    Matrix matrix = matrixes[matrixesIndex];
+    int row = 0;
+    int col = 0;
+    char *content = readFile(filename);
+    
+        printf("%d ", strlen(content));
+        printf("%c ", content[0]);
+        printf("%s ", content);
+    /*
+        printf("%c ", content[0]);
+
+    for (int i = 0; i < 100; i++) {
+        printf("%c ", content[i]);
+        if(content[i] == '\n') {
+            row++;
+        } else {
+            printf(" %s", content[i]);
+            //setMatrixValueAt(&matrix, row, col, atoi(content[i]));
+            col++;
+        }
+    }*/
+    
+    
+    
+    
+    /*
     printf("New matrix %d rows %d cols\n", matrixes[matrixesIndex].rows, matrixes[matrixesIndex].cols);
     createMatrix(&matrixes[matrixesIndex]);
     initializeMatrix(&matrixes[matrixesIndex], tmp);
     printMatrix(matrixes[matrixesIndex]);
     
     cols = 0;
-    indexTmp = 0;
+    indexTmp = 0;*/
     matrixesIndex++;
 }
 
@@ -110,6 +132,31 @@ void saveFile(char *text) {
     } else {
         printf("Error saving file!\n");
     }
+}
+
+char *readFile(char *filename) {
+    FILE *file;
+    char *buffer;
+    long size;
+    file = fopen(filename, "rb");
+
+    if (!file)
+        printf("File %s doesn't exist\n", filename), exit(1);
+    
+    fseek(file, 0L, SEEK_END);
+    size = ftell(file);
+    rewind(file);
+
+    buffer = calloc(1, size + 1);
+    if (!buffer)
+        fclose(file), fputs("memory alloc fails", stderr), exit(1);
+
+    if (1 != fread(buffer, size, 1, file))
+        fclose(file), free(buffer), fputs("entire read fails", stderr), exit(1);
+
+    fclose(file);
+    
+    return buffer;
 }
 
 int main (void) {
