@@ -2,15 +2,18 @@
 void yyerror (char *s);
 #include <stdio.h>
 #include <stdlib.h>
-#include "matrix.h"
+#include <string.h>
 int printResult = 0;
 int matrixesIndex = 0;
+int matrixIndex = 0;
 int indexTmp = 0;
 int cols = 0;
-int tmp[20];
+int tmp[100];
 char *file_name;
 FILE *file;
-struct Matrix matrixes[52];
+int MATRIXES = 20
+float *matrix[MATRIXES];
+int row_col[MATRIXES][2];
 void addCol(int val);
 void addRow();
 void addMatrix();
@@ -74,41 +77,49 @@ void addRow(){
 }
 
 void addMatrix(char *filename){
-    Matrix matrix = matrixes[matrixesIndex];
+    Matrix mat;
     int row = 0;
     int col = 0;
+    int i = 0;
+    float tmp[100];
     char *content = readFile(filename);
-    
-        printf("%d ", strlen(content));
-        printf("%c ", content[0]);
-        printf("%s ", content);
-    /*
-        printf("%c ", content[0]);
-
-    for (int i = 0; i < 100; i++) {
-        printf("%c ", content[i]);
-        if(content[i] == '\n') {
-            row++;
-        } else {
-            printf(" %s", content[i]);
-            //setMatrixValueAt(&matrix, row, col, atoi(content[i]));
-            col++;
+    char *strcopy = calloc(strlen(content), sizeof(char));
+    char *token, *token2;
+    strcopy = strdup (content);
+    while ((token = strsep(&content, "\n"))) {
+        char *tokencopy = calloc(strlen(token), sizeof(char));
+        tokencopy = strdup (token);
+        
+        while ((token2 = strsep(&tokencopy, " "))) {
+            float num = atof(token2);
+            tmp[i] = num;
+            i++;
+            
+            if(row == 0) {
+                col++;                
+            }
         }
-    }*/
+        
+        free(tokencopy);  
+        row++;
+    }
     
+    row_col[matrixIndex][0] = row;
+    row_col[matrixIndex][1] = col;
+    matrix[matrixIndex] = calloc(row * col, sizeof(float));
     
+    for(int i=0; i<row*col; i++) {
+        matrix[matrixIndex][i] = tmp[i];
+    }
     
-    
-    /*
-    printf("New matrix %d rows %d cols\n", matrixes[matrixesIndex].rows, matrixes[matrixesIndex].cols);
-    createMatrix(&matrixes[matrixesIndex]);
-    initializeMatrix(&matrixes[matrixesIndex], tmp);
-    printMatrix(matrixes[matrixesIndex]);
-    
-    cols = 0;
-    indexTmp = 0;*/
+    printMatrix(matrix[matrixIndex], row*col);
     matrixesIndex++;
+    
+    free(content);
+    free(strcopy);
+    free(tokencopy);
 }
+
 
 void setPrintResultOption(){
     printf("Setting view option\n");
@@ -159,8 +170,37 @@ char *readFile(char *filename) {
     return buffer;
 }
 
+
+void setMatrixValueAt(Matrix *matrix, int row, int column, float value) {
+    matrix->data[row + column * matrix->rows * matrix->cols] = value;
+}
+
+float getMatrixValueAt(Matrix matrix, int row, int column) {
+    return matrix.data[row + column * matrix.rows * matrix.cols];
+}
+
+void printMatrix(float *matrix) {
+    for (int i = 0; i < matrix.rows; i++) {
+        for (int j = 0; j < matrix.cols; j++) {
+            printf("%f ", getMatrixValueAt(matrix, i, j));
+        }
+
+        printf("\n");
+    }
+    printf("__________________________________\n");
+}
+
+void printArray(float *array, size_t lenght) {
+    for (int i = 0; i < lenght; i++) {
+        printf("%4.2f ", array[i]);
+    }
+
+    printf("\n");
+}
+
 int main (void) {
 	return yyparse ( );
 }
+
 void yyerror (char *s) {fprintf (stderr, "%s\n", s);} 
 

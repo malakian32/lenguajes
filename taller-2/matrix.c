@@ -7,45 +7,40 @@
 #include <time.h>
 #include "matrix.h"
 
-void createMatrix(Matrix* matrix/*, int rows, int cols*/) {
-    //matrix->rows = rows;
-    //matrix->cols = cols;
-    matrix->memorySize = matrix->rows * matrix->cols * sizeof(int);
-    matrix->pointer = (int*) malloc(matrix->memorySize);
-}
-
-void addMatrixRow(Matrix* matrix) {
-    matrix->memorySize = matrix->rows * (matrix->cols + 1) * sizeof(int);
-    matrix->pointer = (int*) realloc(matrix->pointer, matrix->memorySize);
+void createMatrix(Matrix* matrix, int rows, int cols) {
+    matrix->rows = rows;
+    matrix->cols = cols;
+    matrix->data = calloc(rows * cols, sizeof(float));
 }
 
 void destroyMatrix(Matrix matrix) {
-    free(matrix.pointer);
+    free(matrix.data);
 }
 
-void initializeMatrix(Matrix *matrix, int *array) {
+void initializeMatrix(Matrix *matrix, float *array) {
     int tmp = 0;
+
     for (int i = 0; i < matrix->rows; i++) {
         for (int j = 0; j < matrix->cols; j++) {
-            int value = array[tmp];
+            float value = array[tmp];
             setMatrixValueAt(matrix, i, j, value);
             tmp++;
         }
     }
 }
 
-void setMatrixValueAt(Matrix *matrix, int row, int column, int value) {
-    matrix->pointer[row + column * matrix->rows * matrix->cols] = value;
+void setMatrixValueAt(Matrix *matrix, int row, int column, float value) {
+    matrix->data[row + column * matrix->rows * matrix->cols] = value;
 }
 
-int getMatrixValueAt(Matrix matrix, int row, int column) {
-    return matrix.pointer[row + column * matrix.rows * matrix.cols];
+float getMatrixValueAt(Matrix matrix, int row, int column) {
+    return matrix.data[row + column * matrix.rows * matrix.cols];
 }
 
 void printMatrix(Matrix matrix) {
     for (int i = 0; i < matrix.rows; i++) {
         for (int j = 0; j < matrix.cols; j++) {
-            printf("%i ", getMatrixValueAt(matrix, i, j));
+            printf("%f ", getMatrixValueAt(matrix, i, j));
         }
 
         printf("\n");
@@ -53,9 +48,9 @@ void printMatrix(Matrix matrix) {
     printf("__________________________________\n");
 }
 
-void printArray(int *array, int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%i ", array[i]);
+void printArray(float *array, size_t lenght) {
+    for (int i = 0; i < lenght; i++) {
+        printf("%4.2f ", array[i]);
     }
 
     printf("\n");

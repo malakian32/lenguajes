@@ -67,15 +67,19 @@
 void yyerror (char *s);
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "matrix.h"
 int printResult = 0;
 int matrixesIndex = 0;
+int matrixIndex = 0;
 int indexTmp = 0;
 int cols = 0;
 int tmp[20];
 char *file_name;
 FILE *file;
-struct Matrix matrixes[52];
+struct Matrix matrixes[20];
+float *matrix[20];
+int row_col[20][2];
 void addCol(int val);
 void addRow();
 void addMatrix();
@@ -83,7 +87,7 @@ void setPrintResultOption();
 void setFileName(char *filename);
 char *readFile(char *filename);
 
-#line 87 "y.tab.c" /* yacc.c:339  */
+#line 91 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -137,10 +141,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 22 "calc.y" /* yacc.c:355  */
+#line 26 "calc.y" /* yacc.c:355  */
 int num; char *str;
 
-#line 144 "y.tab.c" /* yacc.c:355  */
+#line 148 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -157,7 +161,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 161 "y.tab.c" /* yacc.c:358  */
+#line 165 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -455,8 +459,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    37,    38,    40,    43,    44,    46,    46,
-      48,    50
+       0,    38,    38,    41,    42,    44,    47,    48,    50,    50,
+      52,    54
 };
 #endif
 
@@ -1230,61 +1234,61 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 34 "calc.y" /* yacc.c:1646  */
+#line 38 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1236 "y.tab.c" /* yacc.c:1646  */
+#line 1240 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 37 "calc.y" /* yacc.c:1646  */
+#line 41 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1242 "y.tab.c" /* yacc.c:1646  */
+#line 1246 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 38 "calc.y" /* yacc.c:1646  */
+#line 42 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1248 "y.tab.c" /* yacc.c:1646  */
+#line 1252 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 40 "calc.y" /* yacc.c:1646  */
+#line 44 "calc.y" /* yacc.c:1646  */
     {addMatrix((yyvsp[0].str));}
-#line 1254 "y.tab.c" /* yacc.c:1646  */
+#line 1258 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 43 "calc.y" /* yacc.c:1646  */
+#line 47 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1260 "y.tab.c" /* yacc.c:1646  */
+#line 1264 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 44 "calc.y" /* yacc.c:1646  */
+#line 48 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1266 "y.tab.c" /* yacc.c:1646  */
+#line 1270 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 46 "calc.y" /* yacc.c:1646  */
+#line 50 "calc.y" /* yacc.c:1646  */
     {;}
-#line 1272 "y.tab.c" /* yacc.c:1646  */
+#line 1276 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 48 "calc.y" /* yacc.c:1646  */
+#line 52 "calc.y" /* yacc.c:1646  */
     {setPrintResultOption();}
-#line 1278 "y.tab.c" /* yacc.c:1646  */
+#line 1282 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 50 "calc.y" /* yacc.c:1646  */
+#line 54 "calc.y" /* yacc.c:1646  */
     {setFileName((yyvsp[0].str));}
-#line 1284 "y.tab.c" /* yacc.c:1646  */
+#line 1288 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1288 "y.tab.c" /* yacc.c:1646  */
+#line 1292 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1512,7 +1516,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 54 "calc.y" /* yacc.c:1906  */
+#line 58 "calc.y" /* yacc.c:1906  */
 
 
 void addCol(int val){
@@ -1536,41 +1540,52 @@ void addRow(){
 }
 
 void addMatrix(char *filename){
-    Matrix matrix = matrixes[matrixesIndex];
+    Matrix mat;
     int row = 0;
     int col = 0;
+    int i = 0;
+    float tmp[100];
     char *content = readFile(filename);
-    
-        printf("%d ", strlen(content));
-        printf("%c ", content[0]);
-        printf("%s ", content);
-    /*
-        printf("%c ", content[0]);
-
-    for (int i = 0; i < 100; i++) {
-        printf("%c ", content[i]);
-        if(content[i] == '\n') {
-            row++;
-        } else {
-            printf(" %s", content[i]);
-            //setMatrixValueAt(&matrix, row, col, atoi(content[i]));
-            col++;
+    char *strcopy = calloc(strlen(content), sizeof(char));
+    char *token, *token2;
+    strcopy = strdup (content);
+    while ((token = strsep(&content, "\n"))) {
+        char *tokencopy = calloc(strlen(token), sizeof(char));
+        tokencopy = strdup (token);
+        
+        while ((token2 = strsep(&tokencopy, " "))) {
+            float num = atof(token2);
+            tmp[i] = num;
+            i++;
+            
+            if(row == 0) {
+                col++;                
+            }
         }
-    }*/
+        
+        free(tokencopy);  
+        row++;
+    }
     
+    row_col[matrixIndex][0] = row;
+    row_col[matrixIndex][1] = col;
+    matrix[matrixIndex] = calloc(row * col, sizeof(float));
     
+    for(int i=0; i<row*col; i++) {
+        matrix[matrixIndex][i] = tmp[i];
+    }
     
+    printArray(matrix[matrixIndex], row*col);
     
     /*
-    printf("New matrix %d rows %d cols\n", matrixes[matrixesIndex].rows, matrixes[matrixesIndex].cols);
-    createMatrix(&matrixes[matrixesIndex]);
-    initializeMatrix(&matrixes[matrixesIndex], tmp);
-    printMatrix(matrixes[matrixesIndex]);
-    
-    cols = 0;
-    indexTmp = 0;*/
+    printMatrix(matrix);    
+    */
     matrixesIndex++;
+    free(content);
+    free(strcopy);
+    
 }
+
 
 void setPrintResultOption(){
     printf("Setting view option\n");
@@ -1624,5 +1639,6 @@ char *readFile(char *filename) {
 int main (void) {
 	return yyparse ( );
 }
+
 void yyerror (char *s) {fprintf (stderr, "%s\n", s);} 
 

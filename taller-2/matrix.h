@@ -2,17 +2,16 @@
 #define MATRIX_H_
 
 typedef struct Matrix {
-    int memorySize;
-    int *pointer;
+    float *data;
     int rows;
     int cols;
 } Matrix;
 
-void createMatrix(Matrix* matrix/*, int rows, int cols*/);
+void createMatrix(Matrix* matrix, int rows, int cols);
 void destroyMatrix(Matrix matrix);
-void initializeMatrix(Matrix *matrix, int *array);
-void setMatrixValueAt(Matrix *matrix, int row, int column, int value);
-int getMatrixValueAt(Matrix matrix, int row, int column);
+void initializeMatrix(Matrix *matrix, float *array);
+void setMatrixValueAt(Matrix *matrix, int row, int column, float value);
+float getMatrixValueAt(Matrix matrix, int row, int column);
 void printMatrix(Matrix matrix);
-void printArray(int * array, int size);
+void printArray(float *array, size_t lenght);
 #endif
