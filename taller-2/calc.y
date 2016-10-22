@@ -3,20 +3,16 @@ void yyerror (char *s);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-int printResult = 0;
-int matrixesIndex = 0;
-int matrixIndex = 0;
-int indexTmp = 0;
-int cols = 0;
-int tmp[100];
+
 char *file_name;
 FILE *file;
-int MATRIXES = 20
-float *matrix[MATRIXES];
-int row_col[MATRIXES][2];
-void addCol(int val);
-void addRow();
-void addMatrix();
+int printResult = 0;
+int matrixIndex = 0;
+float matrixes[20][100][100];
+int row_col[20][2];
+
+void printMatrix(int matrixIndex);
+void addMatrix(char *filename);
 void setPrintResultOption();
 void setFileName(char *filename);
 char *readFile(char *filename);
@@ -56,68 +52,51 @@ saveOption          : save fileName                     {setFileName($2);}
         
 %%
 
-void addCol(int val){
-    printf("New col %d\n", val);
-    tmp[indexTmp] = val;    
-    indexTmp++;
-    cols++;
-    
-    if(matrixes[matrixesIndex].rows == 0) {
-        matrixes[matrixesIndex].cols++;
-    }
-}
-
-void addRow(){
-    if(cols > matrixes[matrixesIndex].cols) {
-        printf("Error: number of columns do not match in some matrix\n");
-    }
-    
-    matrixes[matrixesIndex].rows++;
-    cols=0;
-}
-
 void addMatrix(char *filename){
-    Matrix mat;
-    int row = 0;
-    int col = 0;
+    int colVerification = 0;
     int i = 0;
-    float tmp[100];
+    int j = 0;
     char *content = readFile(filename);
     char *strcopy = calloc(strlen(content), sizeof(char));
     char *token, *token2;
+    
     strcopy = strdup (content);
+    
     while ((token = strsep(&content, "\n"))) {
         char *tokencopy = calloc(strlen(token), sizeof(char));
         tokencopy = strdup (token);
+        j = 0;
         
         while ((token2 = strsep(&tokencopy, " "))) {
-            float num = atof(token2);
-            tmp[i] = num;
-            i++;
-            
-            if(row == 0) {
-                col++;                
-            }
+            /*if(token2 == " "){
+                printf("y %s",token2);
+            }*/
+            matrixes[matrixIndex][i][j] = atof(token2);
+            j++;
         }
         
+        if(i == 0) {
+            colVerification = j;                
+        }
+        
+        if(colVerification != j) {
+            printf("Error, matrix columns do not match!");
+            exit(1);
+        }
+        
+        i++;
         free(tokencopy);  
-        row++;
     }
     
-    row_col[matrixIndex][0] = row;
-    row_col[matrixIndex][1] = col;
-    matrix[matrixIndex] = calloc(row * col, sizeof(float));
+          
+    row_col[matrixIndex][0] = i;
+    row_col[matrixIndex][1] = j;
     
-    for(int i=0; i<row*col; i++) {
-        matrix[matrixIndex][i] = tmp[i];
-    }
-    
-    printMatrix(matrix[matrixIndex], row*col);
-    matrixesIndex++;
+    printMatrix(matrixIndex);
+    matrixIndex++;
     
     free(content);
     free(strcopy);
-    free(tokencopy);
 }
 
 
@@ -170,32 +149,18 @@ char *readFile(char *filename) {
     return buffer;
 }
 
-
-void setMatrixValueAt(Matrix *matrix, int row, int column, float value) {
-    matrix->data[row + column * matrix->rows * matrix->cols] = value;
-}
-
-float getMatrixValueAt(Matrix matrix, int row, int column) {
-    return matrix.data[row + column * matrix.rows * matrix.cols];
-}
-
-void printMatrix(float *matrix) {
-    for (int i = 0; i < matrix.rows; i++) {
-        for (int j = 0; j < matrix.cols; j++) {
-            printf("%f ", getMatrixValueAt(matrix, i, j));
+void printMatrix(int matrixIndex) {
+    int rows = row_col[matrixIndex][0];
+    int cols = row_col[matrixIndex][1];
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%4.2f ", matrixes[matrixIndex][i][j]);
         }
 
         printf("\n");
     }
     printf("__________________________________\n");
-}
-
-void printArray(float *array, size_t lenght) {
-    for (int i = 0; i < lenght; i++) {
-        printf("%4.2f ", array[i]);
-    }
-
-    printf("\n");
 }
 
 int main (void) {
