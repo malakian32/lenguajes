@@ -1,5 +1,5 @@
-1
-2
-3
-4
-5
+[a-zA-Z] id
+[0-9]+   number
+[ \t\n]  space
+ [-+=;]  operator 
+ . 		 

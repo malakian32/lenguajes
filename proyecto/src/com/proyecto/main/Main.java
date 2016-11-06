@@ -5,6 +5,7 @@ import com.proyecto.services.LexicalAnalizer;
 public class Main {
 
 	public static void main(String[] args) {
-		LexicalAnalizer.getInstance().readPatterns();
+		LexicalAnalizer.getInstance().printLexicalCategories();
+
 	}
 }
