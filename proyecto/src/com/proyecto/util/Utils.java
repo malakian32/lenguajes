@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 public class Utils {
-	
+
 	public static List<String> readResourceFile(String filePath) {
 		List<String> lines = null;
 		InputStream in = Utils.class.getClass().getResourceAsStream(filePath);
